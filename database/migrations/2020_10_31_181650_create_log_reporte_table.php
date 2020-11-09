@@ -15,9 +15,9 @@ class CreateLogReporteTable extends Migration
     {
         Schema::create('log_reporte', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("nombre_artista");
-            $table->timestamp('fecha_busqueda');
-            $table->json('canciones');
+            $table->string("artist_name");
+            $table->timestamp('search_date');
+            $table->json('songs');
             #$table->timestamps();
         });
     }

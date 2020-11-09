@@ -8,7 +8,7 @@
                 <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
                     <div class="justify-content-center">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="searchInput" v-model="artista" placeholder="Ej: Eminem">
+                            <input type="text" class="form-control" id="searchInput" v-model="artist" placeholder="Ej: Eminem">
                         </div>
                         <button id="searchButtton" v-on:click="searchByArtistName" class="btn btn-primary btn-lg">Buscar</button>
                     </div>
@@ -24,11 +24,11 @@
 <script>
     export default {
         data: () => ({
-            artista: '',
+            artist: '',
             data: {
-                artista: {id: null, nombre: null},
-                canciones: null,
-                fecha_busqueda: null
+                artist: {id: null, name: null},
+                songs: null,
+                search_date: null
             },
             excel: {
                 id: null
@@ -39,35 +39,35 @@
         },
         methods: {
             searchByArtistName: function(){
-                this.data.artista.id = null
-                this.data.artista.nombre = null
-                this.data.canciones = null
-                this.data.fecha_busqueda = null
+                this.data.artist.id = null
+                this.data.artist.name = null
+                this.data.songs = null
+                this.data.search_date = null
                 this.excel.id = null
 
-                if(this.artista == null || this.artista == '')
+                if(this.artist == null || this.artist == '')
                 {
                     alert("Porfavor ingrese el nombre de un artista")
                     return
                 }
                 axios
-                    .get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/search/artist?q=${this.artista}`)
+                    .get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/search/artist?q=${this.artist}`)
                     .then(response => {
                         if (response.data.data.length == 0){
                             alert("El artista no existe en el sistema")
                             return
                         }
-                        this.data.artista.id = response.data.data[0].id
-                        this.data.artista.nombre = response.data.data[0].name
-                        this.searchSongsByArtistId(this.data.artista.id)
+                        this.data.artist.id = response.data.data[0].id
+                        this.data.artist.name = response.data.data[0].name
+                        this.searchSongsByArtistId(this.data.artist.id)
                     });
             },
             searchSongsByArtistId: function(artistId){
                 axios
                     .get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/artist/${artistId}/top?limit=10`)
                     .then(response => {
-                        this.data.canciones = response.data.data
-                        this.data.fecha_busqueda = new Date().toLocaleString()
+                        this.data.songs = response.data.data
+                        this.data.search_date = new Date().toLocaleString()
                         this.sendData()
                     });
             },

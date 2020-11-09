@@ -18,15 +18,15 @@ class ReporteController extends Controller
     }
 
     public function saveReport(Request $request){
-        if($request->artista['nombre'] == '' || $request->artista['nombre'] == null)
+        if($request->artist['name'] == '' || $request->artist['name'] == null)
         {
             return "Error al guardar el registro";
         }
 
         $reporte = new Reporte;
-        $reporte->nombre_artista = $request->artista['nombre'];
-        $reporte->fecha_busqueda = $request->fecha_busqueda;
-        $reporte->canciones = json_encode($request->canciones);
+        $reporte->artist_name = $request->artist['name'];
+        $reporte->search_date = $request->search_date;
+        $reporte->songs = json_encode($request->songs);
 
         $reporte->save();
 
@@ -38,16 +38,16 @@ class ReporteController extends Controller
 
     public function generateExcel($id){
 
-        $datos = Reporte::find($id);
+        $data = Reporte::find($id);
 
-        $artista = $datos->nombre_artista;
-        $canciones = json_decode($datos->canciones);
-        $fecha_busqueda = date('m-d-Y_h-i-s', strtotime($datos->fecha_busqueda));
+        $artist = $data->artist_name;
+        $songs = json_decode($data->songs);
+        $search_date = date('m-d-Y_H-i-s', strtotime($data->search_date));
 
         $array = [];
 
-        foreach($canciones as $cancion){
-            array_push($array, [$cancion->artist->name, $cancion->title, $cancion->album->title]);
+        foreach($songs as $song){
+            array_push($array, [$song->artist->name, $song->title, $song->album->title]);
         }
 
         $excel = new SongsExport($array);
@@ -56,6 +56,6 @@ class ReporteController extends Controller
             //[1, 2, 3],[4, 5, 6]
         ]);*/
 
-        return Excel::download($excel, "{$artista}_{$fecha_busqueda}.xlsx");
+        return Excel::download($excel, "{$artist}_{$search_date}.xlsx");
     }
 }

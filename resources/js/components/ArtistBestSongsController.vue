@@ -8,16 +8,16 @@
                 <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
                     <div class="justify-content-center">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="searchInput" v-model="artista" placeholder="Ej: Eminem">
+                            <input type="text" class="form-control" id="searchInput" v-model="artist" placeholder="Ej: Eminem">
                         </div>
                         <button id="searchButtton" v-on:click="searchByArtistName" class="btn btn-primary btn-lg">Buscar</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container" v-if="data.canciones !== null">
+        <div class="container" v-if="data.songs !== null">
             <div class="row card-deck">
-                <div v-for="(item, index) in data.canciones" v-bind:key="index" class="col md-4">
+                <div v-for="(item, index) in data.songs" v-bind:key="index" class="col md-4">
                     <div class="card mb-4 box-shadow">
                         <img class="card-img-top img-responsive" v-bind:src="item.album.cover_big">
                         <div class="card-body">
@@ -35,11 +35,10 @@
 <script>
     export default {
         data: () => ({
-            contador: 0,
-            artista: '',
+            artist: '',
             data: {
-                artista: {id: null, nombre: null},
-                canciones: null
+                artist: {id: null, name: null},
+                songs: null
             }
         }),
         mounted() {
@@ -47,25 +46,25 @@
         },
         methods: {
             searchByArtistName: function(){
-                this.data.artista.id = null
-                this.data.artista.nombre = null
-                this.data.canciones = null
+                this.data.artist.id = null
+                this.data.artist.name = null
+                this.data.songs = null
 
-                if(this.artista == null || this.artista == '')
+                if(this.artist == null || this.artist == '')
                 {
                     alert("Porfavor ingrese el nombre de un artista")
                     return
                 }
                 axios
-                    .get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/search/artist?q=${this.artista}`)
+                    .get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/search/artist?q=${this.artist}`)
                     .then(response => {
                         if (response.data.data.length == 0){
                             alert("El artista no existe en el sistema")
                             return
                         }
-                        this.data.artista.id = response.data.data[0].id
-                        this.data.artista.nombre = response.data.data[0].name
-                        this.searchSongsByArtistId(this.data.artista.id)
+                        this.data.artist.id = response.data.data[0].id
+                        this.data.artist.name = response.data.data[0].name
+                        this.searchSongsByArtistId(this.data.artist.id)
                     });
             },
             searchSongsByArtistId: function(artistId){
@@ -76,7 +75,7 @@
                             alert("El artista no tiene canciones en el sistema")
                             return
                         }
-                        this.data.canciones = response.data.data
+                        this.data.songs = response.data.data
                     });
             }
         }

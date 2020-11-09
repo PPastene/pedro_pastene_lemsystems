@@ -32,12 +32,11 @@ export default {
         },
         getArrayofSongs: function(data){
             var array = []
-            data.data.forEach (function(valor, indice){
+            data.data.forEach (function(valor, index){
                 array.push({
-                    //position: data.data[indice].position,
-                    rank: data.data[indice].rank,
-                    titulo: data.data[indice].title_short,
-                    artista: data.data[indice].artist.name
+                    rank: data.data[index].rank,
+                    title: data.data[index].title_short,
+                    artist: data.data[index].artist.name
                 })
             })
             this.generateGraphs(array)
@@ -67,10 +66,10 @@ export default {
                 "type": "serial",
                 "orderByField": "rank",
                 "dataProvider": data,
-                "categoryField": "titulo",
+                "categoryField": "title",
                 "startDuration": 1,
                 "graphs": [{
-                    "balloonText": "Artist: <b>[[artista]]</b><br>Deezer Rank: <b>[[value]]</b>",
+                    "balloonText": "Artist: <b>[[artist]]</b><br>Deezer Rank: <b>[[value]]</b>",
                     "valueField": "rank",
                     "type": "column",
                     "fillAlphas": 0.8,
