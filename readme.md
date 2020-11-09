@@ -1,71 +1,42 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# Prueba LemSystems
+Prueba de ingreso a LemSystems. Consiste en consumir la API de Deezer y mostrar la respuesta en VueJS usando Laravel 5.7 como backend
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Requisitos
 
-## About Laravel
+ - PHP 7.3
+ - Servidor Apache
+ - Composer
+ - Base de datos MySQL o PostgreSQL
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Desarrollo Javascript
+Si quiere desarrollar y compilar los archivos Javascript necesita adempás de NodeJS y NPM instalado
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Docker
+En el repositorio se incluye un Dockerfile y un docker-compose para crear y levantar los servicios requeridos para el ejercicio. Este incluye el contenedor de PHP + Composer, PostgreSQL, NPM y Adminer
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Instalacion
+ 1. Clone el repositorio usando git clone en la carpeta /var/www/html/ y luego entre al directorio recien creado
+ 2. Copie el archivo .env.example y renombrelo a .env
+ 3. Abra el archivo .env e ingrese las credenciales de la base de datos, no olvide especificar el motor de base de datos y luego guardelo
+### Sin Docker
+ 4. Ejecute **composer install** para instalar las dependencias de PHP
+ 5. Ejecute **php artisan key:generate** para generar la llave de encriptación de Laravel
+ 6. Ejecute **php artisan migrate** para crear las migraciones, el sistema arrojará un error si hay problemas de conexión con la base de datos
+ 7. Entre a http://localhost
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost you and your team's skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Usando Docker
+ 4.  En el .env cambie las credenciales de conexion a la base de datos por las siguientes:
+ 
+ DB_CONNECTION=pgsql
+ DB_HOST=postgresql 
+ DB_PORT=5432
+ DB_DATABASE=app_prueba
+ DB_USERNAME=lem_systems
+ DB_PASSWORD=lem_systems
+ 
+ 6. Ejecute los contenedores con **docker-compose up -d --build**. Espere a que se descargue todo y los contenedores se hayan incializado
+ 7. Ejecute **docker-compose run --rm php composer install** para instalar las dependencias de PHP
+ 8. Ejecute **docker exec -it lem_systems_php bash** y luego **php artisan key:generate** para generar la llave de encriptación de Laravel. Para salir del contenedor escriba **exit** en la terminal
+ 9. Ejecute **docker exec -it lem_systems_php bash** y luego **php artisan migrate** para crear las migraciones. Para salir del contenedor escriba **exit** en la terminal
+ 10. Entre a http://localhost
+ 11. Para visualizar la base de datos entre a http://localhost:8080 y use las mismas credenciales indicadas en el .env
