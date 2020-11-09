@@ -1,0 +1,59 @@
+version: "3.8"
+
+networks:
+  laravel:
+
+services:
+
+    php:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      container_name: lem_systems_php
+      stdin_open: true
+      tty: true
+      depends_on:
+        - postgresql
+      ports:
+        - "80:80"
+      volumes:
+        - .:/var/www/html:rw
+      networks:
+        - laravel
+
+    npm:
+      container_name: lem_systems_nodejs
+      image: node:current-alpine
+      working_dir: /var/www/html
+      entrypoint: ['npm', '--no-bin-links']
+      volumes:
+        - .:/var/www/html
+      networks:
+        - laravel
+
+    postgresql:
+      container_name: lem_systems_pgsql
+      image: postgres:13-alpine
+      restart: always
+      environment:
+        POSTGRES_USER: lem_systems
+        POSTGRES_PASSWORD: lem_systems
+        POSTGRES_DB: app_prueba
+      ports:
+        - "5432:5432"
+      volumes:
+        - pgdata:/var/lib/postgresql/data
+      networks:
+        - laravel
+
+    admin:
+      image: adminer
+      restart: always
+      container_name: lem_systems_adminer
+      ports:
+        - "8080:8080"
+      networks:
+        - laravel
+
+volumes:
+  pgdata:
