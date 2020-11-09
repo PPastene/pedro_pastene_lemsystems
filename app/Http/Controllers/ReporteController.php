@@ -32,7 +32,10 @@ class ReporteController extends Controller
 
         if($reporte)
         {
-            return $reporte->id;
+            return response()->json([
+                'id' => $reporte->id,
+                'message' => "La busqueda ha sido guardada satisfactoriamente"
+            ]);
         }
     }
 

@@ -75,7 +75,7 @@
                 axios
                     .post('/excel/save', this.data)
                     .then(response => {
-                        this.excel.id = response.data;
+                        this.excel.id = response.data.id;
                     })
                     .catch(e => console.log(`Error: ${e}`))
             }
