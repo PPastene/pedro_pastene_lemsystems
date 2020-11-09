@@ -23,6 +23,7 @@ En el repositorio se incluye un Dockerfile y un docker-compose para crear y leva
  5. Ejecute **php artisan key:generate** para generar la llave de encriptación de Laravel
  6. Ejecute **php artisan migrate** para crear las migraciones, el sistema arrojará un error si hay problemas de conexión con la base de datos
  7. Entre a http://localhost
+ 8. Si necesita recompilar los archivos Javascript ejecute **npm run dev** 
 
 ### Usando Docker
  4.  En el .env cambie las credenciales de conexion a la base de datos por las siguientes:
@@ -36,7 +37,9 @@ En el repositorio se incluye un Dockerfile y un docker-compose para crear y leva
  
  6. Ejecute los contenedores con **docker-compose up -d --build**. Espere a que se descargue todo y los contenedores se hayan incializado
  7. Ejecute **docker-compose run --rm php composer install** para instalar las dependencias de PHP
- 8. Ejecute **docker exec -it lem_systems_php bash** y luego **php artisan key:generate** para generar la llave de encriptación de Laravel. Para salir del contenedor escriba **exit** en la terminal
- 9. Ejecute **docker exec -it lem_systems_php bash** y luego **php artisan migrate** para crear las migraciones. Para salir del contenedor escriba **exit** en la terminal
+ 8. Ejecute **docker-compose run --rm php bash** y luego **php artisan key:generate** para generar la llave de encriptación de Laravel. Para salir del contenedor escriba **exit** en la terminal
+ 9. Ejecute **docker-compose run --rm php bash** y luego **php artisan migrate** para crear las migraciones. Para salir del contenedor escriba **exit** en la terminal
  10. Entre a http://localhost
- 11. Para visualizar la base de datos entre a http://localhost:8080 y use las mismas credenciales indicadas en el .env
+ 11. Si necesita recompilar los archivos Javascript ejecute **docker-compose run --rm npm run dev**
+ 12. Para visualizar la base de datos entre a http://localhost:8080 y use las mismas credenciales indicadas en el .env
+ 13. Para terminar la ejecución de los contenedores ejecute **docker-compose down**
